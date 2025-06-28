@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" width="31" height="31" viewBox="0 0 31 31">
+  <g id="Layer_1-2" data-name="Layer 1">
+    <g>
+      <circle cx="15.5" cy="15.5" r="15.5" style="fill: #8bffd6;"/>
+      <g>
+        <path d="M12.6,18.4l-7.2-3.1v-1.2l7.2-3.1v1.3l-5.7,2.3,5.7,2.3v1.3Z"/>
+        <path d="M17.6,9.2l-3.1,10.9h-1.1l3.1-10.9h1.1Z"/>
+        <path d="M25.6,15.3l-7.2,3.1v-1.3l5.7-2.3-5.7-2.3v-1.3l7.2,3.1v1.2Z"/>
+      </g>
+    </g>
+  </g>
+</svg>

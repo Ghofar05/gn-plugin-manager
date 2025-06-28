@@ -1,0 +1,146 @@
+extends HBoxContainer
+
+var default = preload("res://assets/pointer_b.png")
+var point = preload("res://assets/hand_small_point.png")
+var path = "C:/Users/Rova/Documents/test plugin manager/copy file"
+
+var targetPathXMLJS = "C:/Users/Rova/Documents/test plugin manager/paste file/xmljsfl"
+var targetPathSWF = "C:/Users/Rova/Documents/test plugin manager/paste file/swf"
+
+var installed_list_file = []
+
+var is_installed:bool = false
+
+func change_label(nama) -> void:
+	name = nama
+	$TextureRect/Label.text = nama
+	update_file_icon()
+
+func update_file_icon() -> void:
+	var dir = DirAccess.open(str(path+"/"+name))
+	var file_list = dir.get_files()
+	#print(file_list)
+	#print(str(name)+"-demo.ogv")
+	for i in file_list:
+		if i == str(name)+".jsfl":
+			$TextureRect/js.show()
+		elif i == str(name)+".xml":
+			$TextureRect/xml.show()
+		elif i == str(name)+".swf":
+			$TextureRect/swf.show()
+		elif i == str(name)+"-demo.ogv":
+			$TextureRect/video.show()
+	pass
+
+
+func install_plugin() -> void:
+	var newPath = str(path+"/"+name)
+	var dir = DirAccess.open(newPath)
+	var file_list = dir.get_files()
+	var list_name_updatejsxml = []
+	var list_name_swf = []
+	
+	# check apakah ada file yang ga ada, dan akan di update
+	for i in file_list:
+		if i == str(name)+".jsfl":
+			list_name_updatejsxml.append(str(name)+".jsfl")
+		elif i == str(name)+".xml":
+			list_name_updatejsxml.append(str(name)+".xml")
+		elif i == str(name)+".swf":
+			list_name_swf.append(str(name)+".swf")
+			
+	
+	installed_list_file.append_array(list_name_updatejsxml)
+	installed_list_file.append_array(list_name_swf)
+	
+	
+	
+	
+	#memulai copy
+	for i in list_name_updatejsxml:
+		copyfile(i,dir,newPath,targetPathXMLJS)
+		
+	for i in list_name_swf:
+		copyfile(i,dir,newPath,targetPathSWF)
+		
+	print("ini installed list file nya : "+str(installed_list_file))
+
+
+func uninstall_plugin() -> void:
+	var dir
+	for i in installed_list_file:
+		if ".swf" in i:
+			dir = DirAccess.open(targetPathSWF)
+			delfile(i,dir,targetPathSWF)
+			
+		elif ".jsfl" in i:
+			dir = DirAccess.open(targetPathXMLJS)
+			delfile(i,dir,targetPathXMLJS)
+			
+		elif ".xml" in i:
+			dir = DirAccess.open(targetPathXMLJS)
+			delfile(i,dir,targetPathXMLJS)
+	
+	
+	pass
+
+
+
+# untuk mencopy file
+func copyfile(filename:String,dir:DirAccess,from:String,to:String):
+	var is_file_exist = dir.file_exists(to+"/"+filename)
+	dir.copy(from+"/"+filename,to+"/"+filename)
+	pass
+
+func delfile(filename:String,dir:DirAccess,to:String):
+	var is_file_exist = dir.file_exists(to+"/"+filename)
+	dir.remove(to+"/"+filename)
+
+
+func _on_install_mouse_entered() -> void:
+	if not is_installed :
+		Input.set_custom_mouse_cursor(point,Input.CURSOR_ARROW,Vector2(12,12))
+	pass # Replace with function body.
+
+
+func _on_install_mouse_exited() -> void:
+	if not is_installed :
+		Input.set_custom_mouse_cursor(default,Input.CURSOR_ARROW,Vector2(12,12))
+	pass # Replace with function body.
+
+
+func _on_uninstall_mouse_entered() -> void:
+	if is_installed:
+		Input.set_custom_mouse_cursor(point,Input.CURSOR_ARROW,Vector2(12,12))
+	pass # Replace with function body.
+
+
+func _on_uninstall_mouse_exited() -> void:
+	if is_installed:
+		Input.set_custom_mouse_cursor(default,Input.CURSOR_ARROW,Vector2(12,12))
+	pass # Replace with function body.
+
+func _ready() -> void:
+	$install.disabled = false
+	$uninstall.disabled = true
+
+
+func _process(_delta: float) -> void:
+	if is_installed:
+		$install.disabled = true
+		$uninstall.disabled = false
+	else :
+		$install.disabled = false
+		$uninstall.disabled = true
+
+
+func _on_install_pressed() -> void:
+	install_plugin()
+	is_installed = true
+	pass # Replace with function body.
+
+
+func _on_uninstall_pressed() -> void:
+	uninstall_plugin()
+	is_installed = false
+	pass # Replace with function body.
