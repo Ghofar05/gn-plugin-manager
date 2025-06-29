@@ -2,17 +2,29 @@ extends HBoxContainer
 
 var default = preload("res://assets/pointer_b.png")
 var point = preload("res://assets/hand_small_point.png")
+var desc = "res://scenes/description.tscn"
+
 var path = "C:/Users/Rova/Documents/test plugin manager/copy file"
 
 var targetPathXMLJS = "C:/Users/Rova/Documents/test plugin manager/paste file/xmljsfl"
 var targetPathSWF = "C:/Users/Rova/Documents/test plugin manager/paste file/swf"
 
+
+var data:Dictionary = {
+	"this_name":"",
+	"installed_jsfl":[],
+	"installed_xml":[],
+	"installed_swf":[],
+	
+	
+}
 var installed_list_file = []
 
 var is_installed:bool = false
 
 func change_label(nama) -> void:
 	name = nama
+	data["this_name"] = nama
 	$TextureRect/Label.text = nama
 	update_file_icon()
 
@@ -44,10 +56,14 @@ func install_plugin() -> void:
 	for i in file_list:
 		if i == str(name)+".jsfl":
 			list_name_updatejsxml.append(str(name)+".jsfl")
+			data["installed_jsfl"].append(str(name)+".jsfl")
+			
 		elif i == str(name)+".xml":
 			list_name_updatejsxml.append(str(name)+".xml")
+			data["installed_xml"].append(str(name)+".xml")
 		elif i == str(name)+".swf":
 			list_name_swf.append(str(name)+".swf")
+			data["installed_swf"].append(str(name)+".swf")
 			
 	
 	installed_list_file.append_array(list_name_updatejsxml)
@@ -62,7 +78,10 @@ func install_plugin() -> void:
 		
 	for i in list_name_swf:
 		copyfile(i,dir,newPath,targetPathSWF)
-		
+	
+	
+	print(data)
+	print("ini dari data: " + str(data["installed_jsfl"]))
 	print("ini installed list file nya : "+str(installed_list_file))
 
 
@@ -72,15 +91,19 @@ func uninstall_plugin() -> void:
 		if ".swf" in i:
 			dir = DirAccess.open(targetPathSWF)
 			delfile(i,dir,targetPathSWF)
+			data["installed_swf"].pop_front()
 			
 		elif ".jsfl" in i:
 			dir = DirAccess.open(targetPathXMLJS)
 			delfile(i,dir,targetPathXMLJS)
+			data["installed_jsfl"].pop_front()
 			
 		elif ".xml" in i:
 			dir = DirAccess.open(targetPathXMLJS)
 			delfile(i,dir,targetPathXMLJS)
+			data["installed_xml"].pop_front()
 	
+	print(data)
 	
 	pass
 
@@ -143,4 +166,11 @@ func _on_install_pressed() -> void:
 func _on_uninstall_pressed() -> void:
 	uninstall_plugin()
 	is_installed = false
+	pass # Replace with function body.
+
+
+func _on_texture_rect_pressed() -> void:
+	Global.current_selection_name = data["this_name"]
+	Global.current_selection_path = path
+	get_tree().change_scene_to_file("res://scenes/description.tscn")
 	pass # Replace with function body.

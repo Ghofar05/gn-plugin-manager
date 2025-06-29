@@ -1,0 +1,175 @@
+[gd_scene load_steps=3 format=3 uid="uid://bhqn6b4r5k025"]
+
+[ext_resource type="Script" uid="uid://bn76xdnynorx1" path="res://scenes/description.gd" id="1_xl7vw"]
+[ext_resource type="Texture2D" uid="uid://c3p2gh0wd8aa0" path="res://assets/close.svg" id="4_dipyx"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xl7vw")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0901766, 0.275662, 0.422875, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 31.0
+offset_top = 27.0
+offset_right = 685.0
+offset_bottom = 418.0
+color = Color(0.0668137, 0.222631, 0.348474, 1)
+
+[node name="ColorRect3" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 31.0
+offset_top = 440.0
+offset_right = 684.0
+offset_bottom = 570.0
+color = Color(0.0668137, 0.222631, 0.348474, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 31.0
+offset_top = 440.0
+offset_right = 683.0
+offset_bottom = 570.0
+
+[node name="thumb1" type="TextureButton" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="thumb2" type="TextureButton" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="thumb3" type="TextureButton" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="imageview" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 37.0
+offset_top = 31.0
+offset_right = 677.0
+offset_bottom = 391.0
+expand_mode = 1
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
+layout_mode = 0
+offset_left = 37.0
+offset_top = 31.0
+offset_right = 677.0
+offset_bottom = 391.0
+ratio = 1.8
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="AspectRatioContainer"]
+layout_mode = 2
+expand = true
+
+[node name="paused_label" type="Label" parent="AspectRatioContainer/VideoStreamPlayer"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -0.5
+offset_top = -9.5
+offset_right = 0.5
+offset_bottom = 9.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "paused"
+
+[node name="judul" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 243.5
+offset_top = 35.0
+offset_right = 414.5
+offset_bottom = 79.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "Lorem Ipsum"
+horizontal_alignment = 1
+
+[node name="versi" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -495.5
+offset_top = 606.0
+offset_right = -352.5
+offset_bottom = 636.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 20
+text = "versi : 1.0"
+
+[node name="TextEdit" type="TextEdit" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 168.5
+offset_top = 106.0
+offset_right = 495.5
+offset_bottom = 568.0
+grow_horizontal = 2
+theme_override_colors/background_color = Color(0.0666667, 0.223529, 0.34902, 1)
+theme_override_colors/font_readonly_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc egestas sit amet elit et interdum. Suspendisse tellus massa, rhoncus nec suscipit quis, scelerisque sed metus. Curabitur at ligula quis sem ultrices hendrerit. Praesent vestibulum convallis elit at feugiat. Suspendisse vel porta lacus, quis condimentum leo. Vivamus facilisis erat nec massa maximus, in ullamcorper tortor rhoncus. Cras volutpat nisl elementum, pulvinar diam vel, consectetur augue. Proin iaculis porttitor risus sit amet semper.
+
+Aliquam luctus augue at massa pellentesque sodales. Maecenas laoreet consectetur odio, vitae eleifend odio ullamcorper eget. Ut in est vitae dolor mattis pharetra vitae elementum ligula. In efficitur, magna quis tincidunt pulvinar, elit nunc sodales odio, ac interdum lacus velit in arcu. Curabitur hendrerit orci ut consequat tempor. Etiam finibus magna sit amet diam consectetur, at tempus purus condimentum. Sed eros arcu, venenatis a ante vestibulum, finibus auctor purus. Sed eleifend nisl nec ligula placerat, id luctus quam bibendum. Morbi quis ipsum non turpis tempor molestie at eu ligula. Suspendisse iaculis sapien ac velit faucibus eleifend."
+editable = false
+wrap_mode = 1
+scroll_smooth = true
+
+[node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -42.0001
+offset_top = 10.0
+offset_right = 26.0
+offset_bottom = 78.0
+grow_horizontal = 0
+scale = Vector2(0.376756, 0.376756)
+texture_normal = ExtResource("4_dipyx")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[connection signal="mouse_entered" from="HBoxContainer/thumb1" to="." method="_on_thumb_1_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/thumb1" to="." method="_on_thumb_1_mouse_exited"]
+[connection signal="pressed" from="HBoxContainer/thumb1" to="." method="_on_thumb_1_pressed"]
+[connection signal="mouse_entered" from="HBoxContainer/thumb2" to="." method="_on_thumb_2_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/thumb2" to="." method="_on_thumb_2_mouse_exited"]
+[connection signal="pressed" from="HBoxContainer/thumb2" to="." method="_on_thumb_2_pressed"]
+[connection signal="mouse_entered" from="HBoxContainer/thumb3" to="." method="_on_thumb_3_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/thumb3" to="." method="_on_thumb_3_mouse_exited"]
+[connection signal="pressed" from="HBoxContainer/thumb3" to="." method="_on_thumb_3_pressed"]
+[connection signal="gui_input" from="AspectRatioContainer/VideoStreamPlayer" to="." method="_on_video_stream_player_gui_input"]
+[connection signal="mouse_entered" from="AspectRatioContainer/VideoStreamPlayer" to="." method="_on_video_stream_player_mouse_entered"]
+[connection signal="mouse_exited" from="AspectRatioContainer/VideoStreamPlayer" to="." method="_on_video_stream_player_mouse_exited"]
+[connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]

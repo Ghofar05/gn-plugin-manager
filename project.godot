@@ -16,13 +16,32 @@ config/features=PackedStringArray("4.4", "GL Compatibility")
 run/low_processor_mode=true
 config/icon="uid://dwfwthl1e1q1y"
 
+[autoload]
+
+Global="*res://autoload/global.gd"
+
 [display]
 
 window/size/viewport_width=1065
-window/size/mode=1
 window/size/resizable=false
 mouse_cursor/custom_image="uid://bhh6uj3utomux"
 mouse_cursor/custom_image_hotspot=Vector2(12, 12)
+
+[gui]
+
+theme/custom_font="uid://bbnkwdf53ji50"
+
+[input]
+
+RMB={
+"deadzone": 0.2,
+"events": []
+}
+LMB={
+"deadzone": 0.2,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"canceled":false,"pressed":false,"double_click":false,"script":null)
+]
+}
 
 [input_devices]
 

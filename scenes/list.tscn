@@ -80,6 +80,7 @@ texture_normal = ExtResource("5_jc5bs")
 texture_pressed = ExtResource("6_3nied")
 texture_disabled = ExtResource("6_3nied")
 
+[connection signal="pressed" from="TextureRect" to="." method="_on_texture_rect_pressed"]
 [connection signal="mouse_entered" from="install" to="." method="_on_install_mouse_entered"]
 [connection signal="mouse_exited" from="install" to="." method="_on_install_mouse_exited"]
 [connection signal="pressed" from="install" to="." method="_on_install_pressed"]
