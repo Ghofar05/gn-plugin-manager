@@ -112,18 +112,31 @@ theme_override_font_sizes/font_size = 30
 text = "Lorem Ipsum"
 horizontal_alignment = 1
 
+[node name="list_paket" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -495.5
+offset_top = 583.0
+offset_right = -159.5
+offset_bottom = 613.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 20
+text = "package list : jsfl,xml,swf"
+
 [node name="versi" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -495.5
-offset_top = 606.0
-offset_right = -352.5
-offset_bottom = 636.0
+offset_top = 613.0
+offset_right = -221.5
+offset_bottom = 643.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 20
-text = "versi : 1.0"
+text = "package  version : 1.0"
 
 [node name="TextEdit" type="TextEdit" parent="."]
 layout_mode = 1

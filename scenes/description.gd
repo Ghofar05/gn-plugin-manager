@@ -117,6 +117,7 @@ func _on_thumb_1_pressed() -> void:
 
 func _on_thumb_2_pressed() -> void:
 	imageview.show()
+	paused_label.show()
 	video_stream_player.paused = true
 	video_stream_player.hide()
 	imageview.texture = data["thumb_2_img"]
@@ -127,6 +128,7 @@ func _on_thumb_2_pressed() -> void:
 
 func _on_thumb_3_pressed() -> void:
 	imageview.show()
+	paused_label.show()
 	video_stream_player.paused = true
 	video_stream_player.hide()
 	imageview.texture = data["thumb_3_img"]
