@@ -62,6 +62,9 @@ func _ready() -> void:
 	
 
 	if is_video_exist:
+		
+		print("ini list terbaru "+str(dir.get_files()))
+		
 		var video_file = VideoStreamTheora.new()
 		video_file.file = newPath+"/"+update_ogv_file
 		video_stream_player.stream = video_file
