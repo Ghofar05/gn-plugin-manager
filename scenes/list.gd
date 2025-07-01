@@ -4,10 +4,10 @@ var default = preload("res://assets/pointer_b.png")
 var point = preload("res://assets/hand_small_point.png")
 var desc = "res://scenes/description.tscn"
 
-var path = "C:/Users/Rova/Documents/test plugin manager/copy file"
+var path = Global.source
 
-var targetPathXMLJS = "C:/Users/Rova/Documents/test plugin manager/paste file/xmljsfl"
-var targetPathSWF = "C:/Users/Rova/Documents/test plugin manager/paste file/swf"
+var targetPathXMLJS = Global.target_source_xmljs
+var targetPathSWF = Global.target_source_swf
 
 
 var data:Dictionary = {
@@ -34,13 +34,13 @@ func update_file_icon() -> void:
 	#print(file_list)
 	#print(str(name)+"-demo.ogv")
 	for i in file_list:
-		if i == str(name)+".jsfl":
+		if ".jsfl" in i:
 			$TextureRect/js.show()
-		elif i == str(name)+".xml":
+		elif ".xml" in i:
 			$TextureRect/xml.show()
-		elif i == str(name)+".swf":
+		elif ".swf" in i:
 			$TextureRect/swf.show()
-		elif i == str(name)+"-demo.ogv":
+		elif ".ogv" in i:
 			$TextureRect/video.show()
 	pass
 
@@ -102,6 +102,7 @@ func uninstall_plugin() -> void:
 			dir = DirAccess.open(targetPathXMLJS)
 			delfile(i,dir,targetPathXMLJS)
 			data["installed_xml"].pop_front()
+			
 	
 	print(data)
 	

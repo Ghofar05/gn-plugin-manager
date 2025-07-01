@@ -1,7 +1,7 @@
 extends Control
 
 var lst = preload("res://scenes/list.tscn")
-var path = "C:/Users/Rova/Documents/test plugin manager/copy file"
+var path = Global.source
 
 func _ready() -> void:
 	
@@ -12,15 +12,8 @@ func _ready() -> void:
 	
 	var dir = DirAccess.open(path)
 	var list_plugin = dir.get_directories()
-	var x = dir.get_files()
 	
 	var total = list_plugin.size()
-	
-	for i in list_plugin :
-		print(i)
-	for i in x :
-		print(i)
-	
 	
 	
 	for i in total:

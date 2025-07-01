@@ -1,22 +1,54 @@
 extends Node
 
+var list_file:Dictionary = {
+	"jsfl": [],
+	"xml":[],
+	"swf":[],
+	"total jsfl":0,
+	"total xml":0,
+	"total swf":0
+}
+
 func _ready() -> void:
+	
+	var dir = DirAccess.open(Global.target_source_xmljs)
+	var listxmljs = dir.get_files()
+	for i in listxmljs:
+		if ".jsfl" in i:
+			list_file["jsfl"].append(i)
+		elif ".xml" in i:
+			list_file["xml"].append(i)
+		elif ".swf" in i:
+			list_file["swf"].append(i)
+			
+			
+	dir = DirAccess.open(Global.target_source_swf)
+	listxmljs = []
+	print(listxmljs)
+	listxmljs = dir.get_files()
+	for i in listxmljs:
+		if ".swf" in i:
+			list_file["swf"].append(i)
+	
+	list_file["total jsfl"] = list_file["jsfl"].size()
+	list_file["total xml"] = list_file["xml"].size()
+	list_file["total swf"] = list_file["swf"].size()
+	
+	
+	var file = FileAccess.open("user://test.json",FileAccess.WRITE)
+	var json = JSON.stringify(list_file)
+	file.store_string(json)
+	file.close()
+	
+	
+	
+	#var read = FileAccess.open("user://test.json",FileAccess.READ)
+	#var yy = read.get_as_text()
+	#print(yy)
+	#var aa = JSON.parse_string(yy)
+	#print(aa)
+	
+	
+
+	
 	pass
-	
-	
-	
-
-
-func dir_contents(path):
-	var dir = DirAccess.open(path)
-	if dir:
-		dir.list_dir_begin()
-		var file_name = dir.get_next()
-		while file_name != "":
-			if dir.current_is_dir():
-				print("Found directory: " + file_name)
-			else:
-				print("Found file: " + file_name)
-			file_name = dir.get_next()
-	else:
-		print("An error occurred when trying to access the path.")

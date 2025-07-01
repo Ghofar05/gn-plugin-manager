@@ -11,8 +11,10 @@ var main = "res://scenes/main.tscn"
 @onready var paused_label: Label = $AspectRatioContainer/VideoStreamPlayer/paused_label
 @onready var imageview: TextureRect = $imageview
 
-
+var is_video_exist:bool
 var is_video_pause:bool = true
+var is_png_exist:bool
+
 var data:Dictionary = {
 	"thumb_2_img":"",
 	"thumb_3_img":"",
@@ -22,7 +24,6 @@ var data:Dictionary = {
 
 var path = Global.current_selection_path
 var this_name = Global.current_selection_name
-
 
 
 
@@ -50,33 +51,39 @@ func _ready() -> void:
 	for i in list_file:
 		if ".png" in i:
 			update_png_file.append(i)
+			is_png_exist = true
 			pass
 		elif ".ogv" in i:
 			update_ogv_file = i
+			is_video_exist = true
 			
 	print("ini list file png dari mentahan = "+str(update_png_file))
 	print (update_ogv_file)
 	
+
+	if is_video_exist:
+		var video_file = VideoStreamTheora.new()
+		video_file.file = newPath+"/"+update_ogv_file
+		video_stream_player.stream = video_file
+		video_stream_player.loop = true
+		video_stream_player.play()
+		video_stream_player.paused = true
+		paused_label.show()
 	
-	var video_file = VideoStreamTheora.new()
-	video_file.file = newPath+"/"+update_ogv_file
-	video_stream_player.stream = video_file
-	video_stream_player.loop = true
-	video_stream_player.play()
-	video_stream_player.paused = true
-	paused_label.show()
+		vid_thumbnail = video_stream_player.get_video_texture().get_image()
+		thumb_1.texture_normal = ImageTexture.create_from_image(vid_thumbnail)
+	
+	if is_png_exist:
+		
+		img_thumbnail1 = Image.load_from_file(newPath+"/"+update_png_file[0])
+		img_thumbnail2 = Image.load_from_file(newPath+"/"+update_png_file[1])
+		
+		thumb_2.texture_normal = ImageTexture.create_from_image(img_thumbnail1)
+		data.set("thumb_2_img",thumb_2.texture_normal)
+		thumb_3.texture_normal = ImageTexture.create_from_image(img_thumbnail2)
+		data.set("thumb_3_img",thumb_3.texture_normal)
 	
 	
-	vid_thumbnail = video_stream_player.get_video_texture().get_image()
-	thumb_1.texture_normal = ImageTexture.create_from_image(vid_thumbnail)
-	
-	img_thumbnail1 = Image.load_from_file(newPath+"/"+update_png_file[0])
-	img_thumbnail2 = Image.load_from_file(newPath+"/"+update_png_file[1])
-	
-	thumb_2.texture_normal = ImageTexture.create_from_image(img_thumbnail1)
-	data.set("thumb_2_img",thumb_2.texture_normal)
-	thumb_3.texture_normal = ImageTexture.create_from_image(img_thumbnail2)
-	data.set("thumb_3_img",thumb_3.texture_normal)
 	
 	print(video_stream_player.is_playing())
 	print(video_stream_player.scale)
