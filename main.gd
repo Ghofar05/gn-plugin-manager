@@ -9,7 +9,16 @@ var list_file:Dictionary = {
 	"total swf":0
 }
 
+
 func _ready() -> void:
+	var init = DirAccess.open("//ARTBID-SERVER/Animation Assets")
+	if init:
+		print("server connected")
+		Global.Device_id = OS.get_unique_id()
+	else:
+		OS.alert("sorry, cannot connect to server")
+		get_tree().quit()
+	
 	
 	var dir = DirAccess.open(Global.target_source_xmljs)
 	var listxmljs = dir.get_files()
@@ -33,7 +42,6 @@ func _ready() -> void:
 	list_file["total jsfl"] = list_file["jsfl"].size()
 	list_file["total xml"] = list_file["xml"].size()
 	list_file["total swf"] = list_file["swf"].size()
-	
 	
 	#var file = FileAccess.open("user://test.json",FileAccess.WRITE)
 	#var json = JSON.stringify(list_file)

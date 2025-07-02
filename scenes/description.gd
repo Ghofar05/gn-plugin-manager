@@ -35,7 +35,7 @@ var this_name = Global.current_selection_name
 
 func _ready() -> void:
 	var dir = DirAccess.open(path)
-	var list_dir = dir.get_directories()
+	#var list_dir = dir.get_directories()
 	var list_file
 	var update_png_file = []
 	var update_ogv_file
@@ -56,7 +56,7 @@ func _ready() -> void:
 		versi.text = str("version : "+ str(info["versi"]))
 		
 	else:
-		print("no "+ str(this_name)+".json exists")
+		OS.alert("no "+ str(this_name)+".json in server")
 	#for i in list_dir:
 		#print(i)
 	
@@ -89,6 +89,7 @@ func _ready() -> void:
 			print("file "+update_ogv_file+" ga ada")
 			dir.copy(newPath+"/"+update_ogv_file,"user://"+update_ogv_file)
 			video_file.file = "user://"+update_ogv_file
+			
 		
 		
 		video_stream_player.stream = video_file
@@ -99,6 +100,8 @@ func _ready() -> void:
 	
 		vid_thumbnail = video_stream_player.get_video_texture().get_image()
 		thumb_1.texture_normal = ImageTexture.create_from_image(vid_thumbnail)
+	else:
+		OS.alert("no video on server")
 	
 	if is_png_exist:
 		
@@ -109,6 +112,8 @@ func _ready() -> void:
 		data.set("thumb_2_img",thumb_2.texture_normal)
 		thumb_3.texture_normal = ImageTexture.create_from_image(img_thumbnail2)
 		data.set("thumb_3_img",thumb_3.texture_normal)
+	else:
+		OS.alert("no image on server")
 	
 	
 	

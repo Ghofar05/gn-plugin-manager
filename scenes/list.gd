@@ -150,7 +150,7 @@ func copyfile(filename:String,dir:DirAccess,from:String,to:String):
 	if dir.file_exists(to+"/"+filename):
 		dir.copy(from+"/"+filename,to+"/"+filename)
 	else:
-		print("file yang mau copy tidak ada")
+		OS.alert("file yang mau copy tidak ada")
 	pass
 
 func delfile(filename:String,dir:DirAccess,to:String):
