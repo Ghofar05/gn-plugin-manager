@@ -1,7 +1,31 @@
-[gd_scene load_steps=3 format=3 uid="uid://cxvd5si4l0ud5"]
+[gd_scene load_steps=8 format=3 uid="uid://cxvd5si4l0ud5"]
 
 [ext_resource type="Script" uid="uid://cqw814srhvwng" path="res://main.gd" id="1_o5qli"]
 [ext_resource type="PackedScene" uid="uid://wecsnp0s80cu" path="res://scenes/list container.tscn" id="2_0wfyh"]
+[ext_resource type="Texture2D" uid="uid://ccgqkvvvinltn" path="res://assets/fly/fly.png" id="3_sugp2"]
+[ext_resource type="Script" uid="uid://d2xl0sfhoatdj" path="res://scenes/fly.gd" id="4_jyhfs"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sugp2"]
+atlas = ExtResource("3_sugp2")
+region = Rect2(0, 117, 100, 84)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jyhfs"]
+atlas = ExtResource("3_sugp2")
+region = Rect2(0, 0, 100, 115)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jyhfs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sugp2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jyhfs")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
 
 [node name="main" type="Control"]
 layout_mode = 3
@@ -26,3 +50,10 @@ offset_bottom = 23.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 50
 text = "GN PLUGIN MANAGER"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(48, 42)
+scale = Vector2(0.3, 0.3)
+sprite_frames = SubResource("SpriteFrames_jyhfs")
+frame_progress = 0.490419
+script = ExtResource("4_jyhfs")

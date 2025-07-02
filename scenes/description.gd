@@ -56,7 +56,7 @@ func _ready() -> void:
 		versi.text = str("version : "+ str(info["versi"]))
 		
 	else:
-		OS.alert("no "+ str(this_name)+".json in server")
+		OS.alert("no file "+ str(this_name)+".json in server")
 	#for i in list_dir:
 		#print(i)
 	

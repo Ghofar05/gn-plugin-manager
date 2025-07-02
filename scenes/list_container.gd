@@ -11,18 +11,21 @@ func _ready() -> void:
 	#print (b)
 	
 	var dir = DirAccess.open(path)
-	var list_plugin = dir.get_directories()
-	
-	var total = list_plugin.size()
-	
-	
-	for i in total:
-		$ScrollContainer/VBoxContainer.add_child(lst.instantiate())
+	if not dir:
+		get_tree().quit()
+	else:
+		var list_plugin = dir.get_directories()
 		
-	var a = get_parent().find_child("VBoxContainer").get_children()
-	var y = 0
-	for i in a:
-		i.change_label(str(list_plugin[y]))
-		i.load_save_data(str(list_plugin[y]))
-		y += 1
-		pass
+		var total = list_plugin.size()
+		
+		
+		for i in total:
+			$ScrollContainer/VBoxContainer.add_child(lst.instantiate())
+			
+		var a = get_parent().find_child("VBoxContainer").get_children()
+		var y = 0
+		for i in a:
+			i.change_label(str(list_plugin[y]))
+			i.load_save_data(str(list_plugin[y]))
+			y += 1
+			pass

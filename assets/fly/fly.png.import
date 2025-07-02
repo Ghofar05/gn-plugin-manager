@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c82amu6beokht"
-path="res://.godot/imported/update on.svg-699786a3c95f9fd5ceda684b52b618c3.ctex"
+uid="uid://ccgqkvvvinltn"
+path="res://.godot/imported/fly.png-c9cf4a9bdfa2021a76f92b2d142cd9fa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/update on.svg"
-dest_files=["res://.godot/imported/update on.svg-699786a3c95f9fd5ceda684b52b618c3.ctex"]
+source_file="res://assets/fly/fly.png"
+dest_files=["res://.godot/imported/fly.png-c9cf4a9bdfa2021a76f92b2d142cd9fa.ctex"]
 
 [params]
 
@@ -32,6 +32,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

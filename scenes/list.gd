@@ -4,11 +4,12 @@ var default = preload("res://assets/pointer_b.png")
 var point = preload("res://assets/hand_small_point.png")
 var desc = "res://scenes/description.tscn"
 
+
 var path = Global.source
 
 var targetPathXMLJS = Global.target_source_xmljs
 var targetPathSWF = Global.target_source_swf
-
+var is_update_available = false
 
 var data:Dictionary = {
 	"this_name":"",
@@ -16,7 +17,9 @@ var data:Dictionary = {
 	"installed_jsfl":[],
 	"installed_xml":[],
 	"installed_swf":[],
-	"is_installed":false
+	"is_installed":false,
+	"last_version":1
+	
 	
 	
 }
@@ -31,10 +34,14 @@ func change_label(nama) -> void:
 	update_file_icon()
 
 func load_save_data(nama) -> void:
+	
+	
+	
 	if FileAccess.file_exists("user://"+str(nama)+".json"):
 		var file = FileAccess.open("user://"+str(nama)+".json",FileAccess.READ)
 		var json = file.get_as_text()
 		data = JSON.parse_string(json)
+		file.close()
 	else:
 		print("no "+ str(nama)+".json exists")
 		
@@ -42,11 +49,23 @@ func load_save_data(nama) -> void:
 	
 	if data["is_installed"]:
 		is_this_installed = true
+		
+		
+		var newPath = path+"/"+name
+		if FileAccess.file_exists(newPath+"/"+name+".json"):
+			var file = FileAccess.open(newPath+"/"+name+".json",FileAccess.READ)
+			var json = file.get_as_text()
+			var info = JSON.parse_string(json)
+			print(info)
+			is_update_available = int(info["versi"]) > int(data["last_version"])
+			file.close()
+		else:
+			OS.alert("no "+ str(name)+".json in server")
+		
+		
 	else :
 		is_this_installed = false
 	
-	
-	pass
 
 
 func update_file_icon() -> void:
@@ -67,6 +86,11 @@ func update_file_icon() -> void:
 
 
 func install_plugin() -> void:
+	
+	
+	
+	
+	
 	var newPath = str(path+"/"+name)
 	var dir = DirAccess.open(newPath)
 	var file_list = dir.get_files()
@@ -76,15 +100,18 @@ func install_plugin() -> void:
 	# check apakah ada file yang ga ada, dan akan di update
 	for i in file_list:
 		if i == str(name)+".jsfl":
-			list_name_updatejsxml.append(str(name)+".jsfl")
-			data["installed_jsfl"].append(str(name)+".jsfl")
+			if not i in list_name_updatejsxml:
+				list_name_updatejsxml.append(str(name)+".jsfl")
+				data["installed_jsfl"].append(str(name)+".jsfl")
 			
 		elif i == str(name)+".xml":
-			list_name_updatejsxml.append(str(name)+".xml")
-			data["installed_xml"].append(str(name)+".xml")
+			if not i in list_name_updatejsxml:
+				list_name_updatejsxml.append(str(name)+".xml")
+				data["installed_xml"].append(str(name)+".xml")
 		elif i == str(name)+".swf":
-			list_name_swf.append(str(name)+".swf")
-			data["installed_swf"].append(str(name)+".swf")
+			if not i in list_name_swf:
+				list_name_swf.append(str(name)+".swf")
+				data["installed_swf"].append(str(name)+".swf")
 			
 	
 	installed_list_file.append_array(list_name_updatejsxml)
@@ -95,43 +122,65 @@ func install_plugin() -> void:
 	var json = JSON.stringify(data)
 	file.store_string(json)
 	file.close()
+	print(data)
 	
+	file = FileAccess.open(newPath+"/"+name+".json",FileAccess.READ)
+	json = file.get_as_text()
+	var info = JSON.parse_string(json)
+	is_update_available = int(info["versi"]) > int(data["last_version"])
+	data["last_version"] = info["versi"]
+	print(data)
+		
+	file = FileAccess.open("user://"+str(name)+".json",FileAccess.WRITE)
+	json = JSON.stringify(data)
+	file.store_string(json)
+	file.close()
+	print(data)
 	
+	file = FileAccess.open(newPath+"/"+name+".json",FileAccess.READ)
+	json = file.get_as_text()
+	info = JSON.parse_string(json)
+	is_update_available = int(info["versi"]) > int(data["last_version"])
 	
 	
 	#memulai copy
 	for i in list_name_updatejsxml:
+		print(i)
 		copyfile(i,dir,newPath,targetPathXMLJS)
 		
 	for i in list_name_swf:
+		print(i)
 		copyfile(i,dir,newPath,targetPathSWF)
 	
 	
-	print(data)
-	print("ini dari data: " + str(data["installed_jsfl"]))
-	print("ini installed list file nya : "+str(installed_list_file))
+
+	
+	#print(data)
+	#print("ini dari data: " + str(data["installed_jsfl"]))
+	#print("ini installed list file nya : "+str(installed_list_file))
 
 
 func uninstall_plugin() -> void:
 	var dir
 	if is_this_installed:
 		for i in installed_list_file:
+			print(i)
 			if ".swf" in i:
 				dir = DirAccess.open(targetPathSWF)
 				delfile(i,dir,targetPathSWF)
-				data["installed_swf"].pop_front()
+				data["installed_swf"].erase(i)
 				
 			elif ".jsfl" in i:
 				dir = DirAccess.open(targetPathXMLJS)
 				delfile(i,dir,targetPathXMLJS)
-				data["installed_jsfl"].pop_front()
+				data["installed_swf"].erase(i)
 				
 			elif ".xml" in i:
 				dir = DirAccess.open(targetPathXMLJS)
 				delfile(i,dir,targetPathXMLJS)
-				data["installed_xml"].pop_front()
+				data["installed_swf"].erase(i)
 	else :
-		print("this plugin not installed")
+		OS.alert("this plugin not installed")
 			
 	data["installed_files"] = []
 	data["is_installed"] = false
@@ -147,27 +196,26 @@ func uninstall_plugin() -> void:
 
 # untuk mencopy file
 func copyfile(filename:String,dir:DirAccess,from:String,to:String):
-	if dir.file_exists(to+"/"+filename):
+	if dir.file_exists(from+"/"+filename):
 		dir.copy(from+"/"+filename,to+"/"+filename)
 	else:
 		OS.alert("file yang mau copy tidak ada")
-	pass
 
 func delfile(filename:String,dir:DirAccess,to:String):
 	if dir.file_exists(to+"/"+filename):
 		dir.remove(to+"/"+filename)
 	else :
-		print("file yang mau dihapus tidak ada")
+		print(to+"/"+filename)
 
 
 func _on_install_mouse_entered() -> void:
-	if not is_this_installed :
+	if not is_this_installed or is_update_available:
 		Input.set_custom_mouse_cursor(point,Input.CURSOR_ARROW,Vector2(12,12))
-	pass # Replace with function body.
+
 
 
 func _on_install_mouse_exited() -> void:
-	if not is_this_installed:
+	if not is_this_installed or is_update_available:
 		Input.set_custom_mouse_cursor(default,Input.CURSOR_ARROW,Vector2(12,12))
 	pass # Replace with function body.
 
@@ -192,9 +240,24 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if is_this_installed:
-		$install.disabled = true
-		$uninstall.disabled = false
+		if is_update_available:
+			$install.texture_normal = load("res://assets/update_active.svg")
+			$install.texture_pressed = load("res://assets/update passive.svg")
+			$install.texture_disabled = load("res://assets/update passive.svg")
+			$install.disabled = false
+			$uninstall.disabled = false
+		else :
+			$install.texture_normal = load("res://assets/install on.svg")
+			$install.texture_pressed = load("res://assets/install off.svg")
+			$install.texture_disabled = load("res://assets/install off.svg")
+			$install.disabled = true
+			$uninstall.disabled = false
+			
+		
 	else :
+		$install.texture_normal = load("res://assets/install on.svg")
+		$install.texture_pressed = load("res://assets/install off.svg")
+		$install.texture_disabled = load("res://assets/install off.svg")
 		$install.disabled = false
 		$uninstall.disabled = true
 
