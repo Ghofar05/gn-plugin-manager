@@ -12,21 +12,42 @@ var targetPathSWF = Global.target_source_swf
 
 var data:Dictionary = {
 	"this_name":"",
+	"installed_files":[],
 	"installed_jsfl":[],
 	"installed_xml":[],
 	"installed_swf":[],
+	"is_installed":false
 	
 	
 }
 var installed_list_file = []
 
-var is_installed:bool = false
+var is_this_installed:bool = false
 
 func change_label(nama) -> void:
 	name = nama
 	data["this_name"] = nama
 	$TextureRect/Label.text = nama
 	update_file_icon()
+
+func load_save_data(nama) -> void:
+	if FileAccess.file_exists("user://"+str(nama)+".json"):
+		var file = FileAccess.open("user://"+str(nama)+".json",FileAccess.READ)
+		var json = file.get_as_text()
+		data = JSON.parse_string(json)
+	else:
+		print("no "+ str(nama)+".json exists")
+		
+	installed_list_file = data["installed_files"]
+	
+	if data["is_installed"]:
+		is_this_installed = true
+	else :
+		is_this_installed = false
+	
+	
+	pass
+
 
 func update_file_icon() -> void:
 	var dir = DirAccess.open(str(path+"/"+name))
@@ -68,6 +89,12 @@ func install_plugin() -> void:
 	
 	installed_list_file.append_array(list_name_updatejsxml)
 	installed_list_file.append_array(list_name_swf)
+	data["installed_files"] = installed_list_file
+	data["is_installed"] = true
+	var file = FileAccess.open("user://"+str(name)+".json",FileAccess.WRITE)
+	var json = JSON.stringify(data)
+	file.store_string(json)
+	file.close()
 	
 	
 	
@@ -87,23 +114,31 @@ func install_plugin() -> void:
 
 func uninstall_plugin() -> void:
 	var dir
-	for i in installed_list_file:
-		if ".swf" in i:
-			dir = DirAccess.open(targetPathSWF)
-			delfile(i,dir,targetPathSWF)
-			data["installed_swf"].pop_front()
+	if is_this_installed:
+		for i in installed_list_file:
+			if ".swf" in i:
+				dir = DirAccess.open(targetPathSWF)
+				delfile(i,dir,targetPathSWF)
+				data["installed_swf"].pop_front()
+				
+			elif ".jsfl" in i:
+				dir = DirAccess.open(targetPathXMLJS)
+				delfile(i,dir,targetPathXMLJS)
+				data["installed_jsfl"].pop_front()
+				
+			elif ".xml" in i:
+				dir = DirAccess.open(targetPathXMLJS)
+				delfile(i,dir,targetPathXMLJS)
+				data["installed_xml"].pop_front()
+	else :
+		print("this plugin not installed")
 			
-		elif ".jsfl" in i:
-			dir = DirAccess.open(targetPathXMLJS)
-			delfile(i,dir,targetPathXMLJS)
-			data["installed_jsfl"].pop_front()
-			
-		elif ".xml" in i:
-			dir = DirAccess.open(targetPathXMLJS)
-			delfile(i,dir,targetPathXMLJS)
-			data["installed_xml"].pop_front()
-			
-	
+	data["installed_files"] = []
+	data["is_installed"] = false
+	var file = FileAccess.open("user://"+str(name)+".json",FileAccess.WRITE)
+	var json = JSON.stringify(data)
+	file.store_string(json)
+	file.close()
 	print(data)
 	
 	pass
@@ -112,45 +147,51 @@ func uninstall_plugin() -> void:
 
 # untuk mencopy file
 func copyfile(filename:String,dir:DirAccess,from:String,to:String):
-	var is_file_exist = dir.file_exists(to+"/"+filename)
-	dir.copy(from+"/"+filename,to+"/"+filename)
+	if dir.file_exists(to+"/"+filename):
+		dir.copy(from+"/"+filename,to+"/"+filename)
+	else:
+		print("file yang mau copy tidak ada")
 	pass
 
 func delfile(filename:String,dir:DirAccess,to:String):
-	var is_file_exist = dir.file_exists(to+"/"+filename)
-	dir.remove(to+"/"+filename)
+	if dir.file_exists(to+"/"+filename):
+		dir.remove(to+"/"+filename)
+	else :
+		print("file yang mau dihapus tidak ada")
 
 
 func _on_install_mouse_entered() -> void:
-	if not is_installed :
+	if not is_this_installed :
 		Input.set_custom_mouse_cursor(point,Input.CURSOR_ARROW,Vector2(12,12))
 	pass # Replace with function body.
 
 
 func _on_install_mouse_exited() -> void:
-	if not is_installed :
+	if not is_this_installed:
 		Input.set_custom_mouse_cursor(default,Input.CURSOR_ARROW,Vector2(12,12))
 	pass # Replace with function body.
 
 
 func _on_uninstall_mouse_entered() -> void:
-	if is_installed:
+	if is_this_installed:
 		Input.set_custom_mouse_cursor(point,Input.CURSOR_ARROW,Vector2(12,12))
 	pass # Replace with function body.
 
 
 func _on_uninstall_mouse_exited() -> void:
-	if is_installed:
+	if is_this_installed:
 		Input.set_custom_mouse_cursor(default,Input.CURSOR_ARROW,Vector2(12,12))
 	pass # Replace with function body.
 
 func _ready() -> void:
-	$install.disabled = false
-	$uninstall.disabled = true
+	pass
+
+	
+
 
 
 func _process(_delta: float) -> void:
-	if is_installed:
+	if is_this_installed:
 		$install.disabled = true
 		$uninstall.disabled = false
 	else :
@@ -160,13 +201,13 @@ func _process(_delta: float) -> void:
 
 func _on_install_pressed() -> void:
 	install_plugin()
-	is_installed = true
+	is_this_installed = true
 	pass # Replace with function body.
 
 
 func _on_uninstall_pressed() -> void:
 	uninstall_plugin()
-	is_installed = false
+	is_this_installed = false
 	pass # Replace with function body.
 
 

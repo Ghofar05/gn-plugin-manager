@@ -10,6 +10,10 @@ var main = "res://scenes/main.tscn"
 @onready var thumb_3: TextureButton = $HBoxContainer/thumb3
 @onready var paused_label: Label = $AspectRatioContainer/VideoStreamPlayer/paused_label
 @onready var imageview: TextureRect = $imageview
+@onready var judul: Label = $judul
+@onready var deskripsi: TextEdit = $deskripsi
+@onready var versi: Label = $versi
+
 
 var is_video_exist:bool
 var is_video_pause:bool = true
@@ -39,14 +43,26 @@ func _ready() -> void:
 	var img_thumbnail1:Image
 	var img_thumbnail2:Image
 	
-	for i in list_dir:
-		print(i)
-	
 	var newPath = str(path+"/"+this_name)
-	
 	dir = DirAccess.open(newPath)
+	
+	if FileAccess.file_exists(newPath+"/"+this_name+".json"):
+		var file = FileAccess.open(newPath+"/"+this_name+".json",FileAccess.READ)
+		var json = file.get_as_text()
+		var info = JSON.parse_string(json)
+		print(info)
+		judul.text = info["nama"]
+		deskripsi.text = info["deskripsi"]
+		versi.text = str("version : "+ str(info["versi"]))
+		
+	else:
+		print("no "+ str(this_name)+".json exists")
+	#for i in list_dir:
+		#print(i)
+	
+
 	list_file = dir.get_files()
-	print("ini list file mentahan = "+str(list_file))
+	#print("ini list file mentahan = "+str(list_file))
 	
 	for i in list_file:
 		if ".png" in i:
@@ -57,16 +73,24 @@ func _ready() -> void:
 			update_ogv_file = i
 			is_video_exist = true
 			
-	print("ini list file png dari mentahan = "+str(update_png_file))
-	print (update_ogv_file)
+	#print("ini list file png dari mentahan = "+str(update_png_file))
+	#print (update_ogv_file)
 	
 
 	if is_video_exist:
-		
+		print(newPath)
 		print("ini list terbaru "+str(dir.get_files()))
 		
 		var video_file = VideoStreamTheora.new()
-		video_file.file = newPath+"/"+update_ogv_file
+		
+		if FileAccess.file_exists("user://"+update_ogv_file):
+			video_file.file = "user://"+update_ogv_file
+		else:
+			print("file "+update_ogv_file+" ga ada")
+			dir.copy(newPath+"/"+update_ogv_file,"user://"+update_ogv_file)
+			video_file.file = "user://"+update_ogv_file
+		
+		
 		video_stream_player.stream = video_file
 		video_stream_player.loop = true
 		video_stream_player.play()

@@ -23,5 +23,6 @@ func _ready() -> void:
 	var y = 0
 	for i in a:
 		i.change_label(str(list_plugin[y]))
+		i.load_save_data(str(list_plugin[y]))
 		y += 1
 		pass

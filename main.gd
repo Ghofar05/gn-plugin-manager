@@ -35,10 +35,10 @@ func _ready() -> void:
 	list_file["total swf"] = list_file["swf"].size()
 	
 	
-	var file = FileAccess.open("user://test.json",FileAccess.WRITE)
-	var json = JSON.stringify(list_file)
-	file.store_string(json)
-	file.close()
+	#var file = FileAccess.open("user://test.json",FileAccess.WRITE)
+	#var json = JSON.stringify(list_file)
+	#file.store_string(json)
+	#file.close()
 	
 	
 	
