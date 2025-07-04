@@ -99,16 +99,16 @@ func install_plugin() -> void:
 	
 	# check apakah ada file yang ga ada, dan akan di update
 	for i in file_list:
-		if i == str(name)+".jsfl":
+		if ".jsfl" in i :
 			if not i in list_name_updatejsxml:
 				list_name_updatejsxml.append(str(name)+".jsfl")
 				data["installed_jsfl"].append(str(name)+".jsfl")
 			
-		elif i == str(name)+".xml":
+		elif ".xml" in i:
 			if not i in list_name_updatejsxml:
 				list_name_updatejsxml.append(str(name)+".xml")
 				data["installed_xml"].append(str(name)+".xml")
-		elif i == str(name)+".swf":
+		elif ".swf" in i:
 			if not i in list_name_swf:
 				list_name_swf.append(str(name)+".swf")
 				data["installed_swf"].append(str(name)+".swf")
