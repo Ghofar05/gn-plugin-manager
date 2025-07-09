@@ -96,6 +96,9 @@ offset_right = 0.5
 offset_bottom = 9.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 30
 text = "paused"
 
 [node name="judul" type="Label" parent="."]
@@ -112,33 +115,20 @@ theme_override_font_sizes/font_size = 30
 text = "Lorem Ipsum"
 horizontal_alignment = 1
 
-[node name="list_paket" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -495.5
-offset_top = 583.0
-offset_right = -159.5
-offset_bottom = 613.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 20
-text = "package list : jsfl,xml,swf"
-
 [node name="versi" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -495.5
-offset_top = 613.0
-offset_right = -221.5
-offset_bottom = 643.0
+offset_left = -543.0
+offset_top = 583.0
+offset_right = -269.0
+offset_bottom = 613.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 20
 text = "package  version : 1.0"
 
-[node name="TextEdit" type="TextEdit" parent="."]
+[node name="deskripsi" type="TextEdit" parent="."]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -155,6 +145,12 @@ text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc egestas si
 
 Aliquam luctus augue at massa pellentesque sodales. Maecenas laoreet consectetur odio, vitae eleifend odio ullamcorper eget. Ut in est vitae dolor mattis pharetra vitae elementum ligula. In efficitur, magna quis tincidunt pulvinar, elit nunc sodales odio, ac interdum lacus velit in arcu. Curabitur hendrerit orci ut consequat tempor. Etiam finibus magna sit amet diam consectetur, at tempus purus condimentum. Sed eros arcu, venenatis a ante vestibulum, finibus auctor purus. Sed eleifend nisl nec ligula placerat, id luctus quam bibendum. Morbi quis ipsum non turpis tempor molestie at eu ligula. Suspendisse iaculis sapien ac velit faucibus eleifend."
 editable = false
+context_menu_enabled = false
+shortcut_keys_enabled = false
+selecting_enabled = false
+drag_and_drop_selection_enabled = false
+virtual_keyboard_enabled = false
+middle_mouse_paste_enabled = false
 wrap_mode = 1
 scroll_smooth = true
 
