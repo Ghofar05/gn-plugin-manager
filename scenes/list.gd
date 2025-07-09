@@ -101,17 +101,17 @@ func install_plugin() -> void:
 	for i in file_list:
 		if ".jsfl" in i :
 			if not i in list_name_updatejsxml:
-				list_name_updatejsxml.append(str(name)+".jsfl")
-				data["installed_jsfl"].append(str(name)+".jsfl")
+				list_name_updatejsxml.append(str(i))
+				data["installed_jsfl"].append(str(i))
 			
 		elif ".xml" in i:
 			if not i in list_name_updatejsxml:
-				list_name_updatejsxml.append(str(name)+".xml")
-				data["installed_xml"].append(str(name)+".xml")
+				list_name_updatejsxml.append(str(i))
+				data["installed_xml"].append(str(i))
 		elif ".swf" in i:
 			if not i in list_name_swf:
-				list_name_swf.append(str(name)+".swf")
-				data["installed_swf"].append(str(name)+".swf")
+				list_name_swf.append(str(i))
+				data["installed_swf"].append(str(i))
 			
 	
 	installed_list_file.append_array(list_name_updatejsxml)
@@ -125,32 +125,36 @@ func install_plugin() -> void:
 	print(data)
 	
 	file = FileAccess.open(newPath+"/"+name+".json",FileAccess.READ)
-	json = file.get_as_text()
-	var info = JSON.parse_string(json)
-	is_update_available = int(info["versi"]) > int(data["last_version"])
-	data["last_version"] = info["versi"]
-	print(data)
+	if not file:
+		OS.alert("no "+ str(name)+".json in server")
+	else:
 		
-	file = FileAccess.open("user://"+str(name)+".json",FileAccess.WRITE)
-	json = JSON.stringify(data)
-	file.store_string(json)
-	file.close()
-	print(data)
-	
-	file = FileAccess.open(newPath+"/"+name+".json",FileAccess.READ)
-	json = file.get_as_text()
-	info = JSON.parse_string(json)
-	is_update_available = int(info["versi"]) > int(data["last_version"])
-	
-	
-	#memulai copy
-	for i in list_name_updatejsxml:
-		print(i)
-		copyfile(i,dir,newPath,targetPathXMLJS)
+		json = file.get_as_text()
+		var info = JSON.parse_string(json)
+		is_update_available = int(info["versi"]) > int(data["last_version"])
+		data["last_version"] = info["versi"]
+		print(data)
+			
+		file = FileAccess.open("user://"+str(name)+".json",FileAccess.WRITE)
+		json = JSON.stringify(data)
+		file.store_string(json)
+		file.close()
+		print(data)
 		
-	for i in list_name_swf:
-		print(i)
-		copyfile(i,dir,newPath,targetPathSWF)
+		file = FileAccess.open(newPath+"/"+name+".json",FileAccess.READ)
+		json = file.get_as_text()
+		info = JSON.parse_string(json)
+		is_update_available = int(info["versi"]) > int(data["last_version"])
+		
+		
+		#memulai copy
+		for i in list_name_updatejsxml:
+			print("iniiiiiiiiiiiii "+i)
+			copyfile(i,dir,newPath,targetPathXMLJS)
+			
+		for i in list_name_swf:
+			print(i)
+			copyfile(i,dir,newPath,targetPathSWF)
 	
 	
 

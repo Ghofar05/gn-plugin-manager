@@ -1,5 +1,11 @@
 extends Node
+@onready var label: Label = $Control/Label
 
+# custom mouse pointer
+var default = preload("res://assets/pointer_b.png")
+var point = preload("res://assets/hand_small_point.png")
+
+# summary
 var list_file:Dictionary = {
 	"jsfl": [],
 	"xml":[],
@@ -11,6 +17,12 @@ var list_file:Dictionary = {
 
 
 func _ready() -> void:
+	var t = get_tree().create_tween().set_loops()
+	t.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	t.tween_property(label,"position",Vector2(321.5,5.0),0.5)
+	t.tween_property(label,"position",Vector2(321.5,0),0.5)
+	
+	# check is path exist
 	var init = DirAccess.open(Global.source)
 	if init:
 		print("server connected")
@@ -60,5 +72,18 @@ func _ready() -> void:
 	
 	
 
-	
-	pass
+
+
+func _on_texture_button_pressed() -> void:
+	OS.shell_open("https://www.youtube.com/")
+	pass # Replace with function body.
+
+
+func _on_texture_button_mouse_entered() -> void:
+	Input.set_custom_mouse_cursor(point,Input.CURSOR_ARROW,Vector2(12,12))
+	pass # Replace with function body.
+
+
+func _on_texture_button_mouse_exited() -> void:
+	Input.set_custom_mouse_cursor(default,Input.CURSOR_ARROW,Vector2(12,12))
+	pass # Replace with function body.
