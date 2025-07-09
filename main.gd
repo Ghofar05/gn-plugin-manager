@@ -75,7 +75,7 @@ func _ready() -> void:
 
 
 func _on_texture_button_pressed() -> void:
-	OS.shell_open("https://www.youtube.com/")
+	OS.shell_open("https://github.com/Ghofar05/gn-plugin-manager")
 	pass # Replace with function body.
 
 
