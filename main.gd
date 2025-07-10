@@ -17,7 +17,7 @@ var list_file:Dictionary = {
 
 
 func _ready() -> void:
-	var t = get_tree().create_tween().set_loops()
+	var t = create_tween().set_loops()
 	t.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	t.tween_property(label,"position",Vector2(321.5,5.0),0.5)
 	t.tween_property(label,"position",Vector2(321.5,0),0.5)

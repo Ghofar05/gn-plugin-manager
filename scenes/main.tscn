@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://cxvd5si4l0ud5"]
+[gd_scene load_steps=10 format=3 uid="uid://cxvd5si4l0ud5"]
 
 [ext_resource type="Script" uid="uid://cqw814srhvwng" path="res://main.gd" id="1_o5qli"]
 [ext_resource type="PackedScene" uid="uid://wecsnp0s80cu" path="res://scenes/list container.tscn" id="2_0wfyh"]
 [ext_resource type="Texture2D" uid="uid://ccgqkvvvinltn" path="res://assets/fly/fly.png" id="3_sugp2"]
 [ext_resource type="Script" uid="uid://d2xl0sfhoatdj" path="res://scenes/fly.gd" id="4_jyhfs"]
 [ext_resource type="Texture2D" uid="uid://w625w34a7b1b" path="res://assets/github-mark-white.svg" id="5_tbgi4"]
+[ext_resource type="Texture2D" uid="uid://bda34vbahet0m" path="res://assets/swf.svg" id="6_tefeu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sugp2"]
 atlas = ExtResource("3_sugp2")
@@ -84,6 +85,36 @@ offset_right = -44.0
 offset_bottom = 61.0
 grow_horizontal = 0
 texture_normal = ExtResource("5_tbgi4")
+
+[node name="Control2" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 2.0
+offset_top = 17.0
+offset_right = 42.0
+offset_bottom = 57.0
+
+[node name="Label" type="Label" parent="Control2"]
+layout_mode = 0
+offset_left = 66.0
+offset_top = 55.0
+offset_right = 130.0
+offset_bottom = 74.0
+theme_override_colors/font_color = Color(0.719454, 2.55093e-06, 5.77569e-07, 1)
+text = "* klo ada"
+
+[node name="Label2" type="Label" parent="Control2"]
+layout_mode = 0
+offset_left = 181.0
+offset_top = 55.0
+offset_right = 408.0
+offset_bottom = 74.0
+theme_override_colors/font_color = Color(0.719454, 2.55093e-06, 5.77569e-07, 1)
+text = ", harap di restart animatenya ya"
+
+[node name="Swf" type="Sprite2D" parent="Control2"]
+position = Vector2(155, 63)
+scale = Vector2(1.00403, 1.00403)
+texture = ExtResource("6_tefeu")
 
 [connection signal="mouse_entered" from="TextureButton" to="." method="_on_texture_button_mouse_entered"]
 [connection signal="mouse_exited" from="TextureButton" to="." method="_on_texture_button_mouse_exited"]
